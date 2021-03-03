@@ -21,4 +21,27 @@ module.exports = function(app, db) {
       }
     });
   });
+  app.get('/getCharacteristics/:categories', (req, res) => {
+    const details = { 'categories': req.params.categories };
+    myDB.collection('rating-characteristics').findOne(details, (err, item) => {
+      if (err) {
+        res.send({'error':'An error has occurred'});
+      } else {
+        res.send(item.items);
+      } 
+    })
+  })
+  app.post('/create-review/:id', (req, res) => {
+    const details = { '_id': new ObjectID(req.params.id) };
+    console.log('here');
+    req.on('data', function (data) {
+      myDB.collection('product').updateOne(details, { $push: { reviews: JSON.parse(data) }}, (err, item) => {
+        if (err) {
+          res.send({'error':'An error has occurred'});
+        } else {
+          res.send({'status':'product updated'});
+        } 
+      })
+    });
+  })
 };
