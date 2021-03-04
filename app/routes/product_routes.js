@@ -33,14 +33,37 @@ module.exports = function(app, db) {
   })
   app.post('/create-review/:id', (req, res) => {
     const details = { '_id': new ObjectID(req.params.id) };
-    console.log('here');
     req.on('data', function (data) {
       myDB.collection('product').updateOne(details, { $push: { reviews: JSON.parse(data) }}, (err, item) => {
         if (err) {
           res.send({'error':'An error has occurred'});
         } else {
-          res.send({'status':'product updated'});
+          res.send({'status':'review added'});
         } 
+      })
+    });
+  })
+  app.post('/create-comment/:id/:uName', (req, res) => {
+    const details = { '_id': new ObjectID(req.params.id) };
+    var uName = req.params.uName
+    req.on('data', function (data) {
+      myDB.collection('product').findOne(details, (err, item) => {
+        if (err) {
+          res.send({'error':'An error has occurred'});
+        } else {
+          item.reviews.forEach(e => {
+            if (e.uName === uName) {
+              e.comments.push(JSON.parse(data))
+            }
+          });
+          myDB.collection('product').updateOne(details, {$set: item}, (err, item) => {
+            if (err) {
+                res.send({'error':'An error has occurred'});
+              } else {
+                res.send({'status':'comment added'});
+              } 
+          })
+        }
       })
     });
   })
