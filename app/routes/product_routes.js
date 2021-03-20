@@ -9,7 +9,11 @@ module.exports = function(app, db) {
       if (err) {
         res.send({'error':'An error has occurred'});
       } else {
-        res.send(item);
+        var newArray = []
+        item.forEach(e => {
+          newArray.push({_id: e._id, imgSrc: e.imgSrc, name: e.name, titleDescription: e.titleDescription, price: e.price, reviews: e.reviews})
+        })
+        res.send(newArray);
       } 
     });
   });
