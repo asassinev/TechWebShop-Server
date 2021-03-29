@@ -32,7 +32,6 @@ module.exports = function(app, db) {
     req.on('data', function (data) {
       const details = { '_id': new ObjectID(JSON.parse(data)._id) };
       var user = JSON.parse(data)
-      myDB.collection('users').updateOne(details,{$set: {firstName: user.firstName, secondName: user.secondName, sex: user.sex}}, (err, item) => {
       myDB.collection('users').updateOne(details,{$set: {email: user.email, firstName: user.firstName, secondName: user.secondName, sex: user.sex, phone: user.phone}}, (err, item) => {
         if (err) {
           res.send({'error':'An error has occurred'});
