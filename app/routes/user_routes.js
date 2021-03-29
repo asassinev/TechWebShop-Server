@@ -41,4 +41,16 @@ module.exports = function(app, db) {
       })
     });
   })
+  app.post('/change-user-password', (req, res) => {
+    req.on('data', function(data) {
+      const details = { '_id': new ObjectID(JSON.parse(data)._id) };
+      myDB.collection('users').updateOne(details, {$set: {password: JSON.parse(data).password}}, (err, item) => {
+        if (err) {
+          res.send({'error':'An error has occurred'})
+        } else {
+          res.send({'status':'User updated'});
+        }
+      })
+    })
+  })
 }
