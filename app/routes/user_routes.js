@@ -23,8 +23,9 @@ module.exports = function(app, db) {
       })
     })
   })
-  app.get('/login-user/:email/:password', (req, res) => {
-    myDB.collection('users').findOne({email: req.params.email, password: req.params.password}, (err, item) => {
+  app.post('/login-user', (req, res) => {
+    console.log(req.body);
+    myDB.collection('users').findOne({email: req.body.email, password: req.body.password}, (err, item) => {
       if (err) {
         res.send({'error':'An error has occurred'});
       } else {
@@ -37,28 +38,24 @@ module.exports = function(app, db) {
     })
   })
   app.post('/change-user', (req, res) => {
-    req.on('data', function (data) {
-      const details = { '_id': new ObjectID(JSON.parse(data)._id) };
-      var user = JSON.parse(data)
-      myDB.collection('users').updateOne(details,{$set: {email: user.email, firstName: user.firstName, secondName: user.secondName, sex: user.sex, phone: user.phone}}, (err, item) => {
-        if (err) {
-          res.send({'error':'An error has occurred'});
-        } else {
-          res.send({'status':'User updated'});
-        } 
-      })
-    });
+    const details = { '_id': new ObjectID(req.body._id) };
+    var user = req.body
+    myDB.collection('users').updateOne(details,{$set: {email: user.email, firstName: user.firstName, secondName: user.secondName, sex: user.sex, phone: user.phone}}, (err, item) => {
+      if (err) {
+        res.send({'error':'An error has occurred'});
+      } else {
+        res.send({'status':'User updated'});
+      } 
+    })
   })
   app.post('/change-user-password', (req, res) => {
-    req.on('data', function(data) {
-      const details = { '_id': new ObjectID(JSON.parse(data)._id) };
-      myDB.collection('users').updateOne(details, {$set: {password: JSON.parse(data).password}}, (err, item) => {
-        if (err) {
-          res.send({'error':'An error has occurred'})
-        } else {
-          res.send({'status':'User updated'});
-        }
-      })
+    const details = { '_id': new ObjectID(req.body._id) };
+    myDB.collection('users').updateOne(details, {$set: {password: req.body.password}}, (err, item) => {
+      if (err) {
+        res.send({'error':'An error has occurred'})
+      } else {
+        res.send({'status':'User updated'});
+      }
     })
   })
 }
