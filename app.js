@@ -1,6 +1,5 @@
 const express        = require('express');
 const MongoClient    = require('mongodb').MongoClient;
-const bodyParser     = require('body-parser');
 const db             = require('./config/db');
 const app            = express();
 var cors = require ('cors');
@@ -9,7 +8,10 @@ app.use(cors({
     credentials:true
 }));
 const port = 8000;
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 MongoClient.connect(db.url, {useNewUrlParser: true, useUnifiedTopology: true}, (err, database) => {
   if (err) return console.log(err)
   require('./app/routes')(app, database);
