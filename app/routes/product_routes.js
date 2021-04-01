@@ -3,7 +3,8 @@ const { ObjectId } = require('bson');
 module.exports = function(app, db) {
   var ObjectID = require('mongodb').ObjectID;
   const myDB = db.db('TechWebShop');
-  app.use('/test', (req, res) => {
+  app.get('/test', (req, res) => {
+    console.log('here');
     res.send("done")
   })
   app.get('/productList/:categories', (req, res) => {
