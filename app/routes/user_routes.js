@@ -3,7 +3,7 @@ const { ObjectId } = require('bson');
 module.exports = function(app, db) {
   var ObjectID = require('mongodb').ObjectID;
   const myDB = db.db('TechWebShop');
-  app.use('/create-user', (req, res) => {
+  app.post('/create-user/', (req, res) => {
     req.on('data', function (data) {
       myDB.collection('users').findOne({email: JSON.parse(data).email}, (err, item) => {
         if (item !== null || err) {

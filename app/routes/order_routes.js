@@ -3,7 +3,7 @@ const { ObjectId } = require('bson');
 module.exports = function(app, db) {
   var ObjectID = require('mongodb').ObjectID;
   const myDB = db.db('TechWebShop');
-  app.post('/create-order', (req, res) => {
+  app.post('/create-order/', (req, res) => {
     req.on('data', function (data) {
       data._id = new ObjectId()
       myDB.collection('orders').insertOne(JSON.parse(data), (err, item) => {
