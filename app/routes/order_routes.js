@@ -4,8 +4,9 @@ module.exports = function(app, db) {
   var ObjectID = require('mongodb').ObjectID;
   const myDB = db.db('TechWebShop');
   app.post('/create-order', (req, res) => {
-    res.body._id = new ObjectId()
-    myDB.collection('orders').insertOne(req.body, (err, item) => {
+    var order = req.body;
+    order._id = new ObjectId()
+    myDB.collection('orders').insertOne(order, (err, item) => {
       if (err) {
         res.send({'error':'An error has occurred'});
       } else {

@@ -10,8 +10,9 @@ module.exports = function(app, db) {
           error: 'Email already exists'
         });
       } else {
-        req.body._id = new ObjectId()
-        myDB.collection('users').insertOne(req.body, (err, item) => {
+        var user = req.body;
+        user._id = new ObjectId()
+        myDB.collection('users').insertOne(user, (err, item) => {
           if (err) {
             res.send({'error':'An error has occurred'});
           } else {
