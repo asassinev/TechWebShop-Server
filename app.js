@@ -1,6 +1,6 @@
 const express        = require('express');
 const MongoClient    = require('mongodb').MongoClient;
-const db             = 'mongodb+srv://Evgeny:PROTOT98SET@cluster0.rpeme.mongodb.net/TechWebShop?retryWrites=true&w=majority'
+const db             = proccess.env.MONGODB_URL
 const app            = express();
 var cors = require ('cors');
 app.use(cors({
