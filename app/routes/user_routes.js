@@ -3,24 +3,22 @@ const { ObjectId } = require('bson');
 module.exports = function(app, db) {
   var ObjectID = require('mongodb').ObjectID;
   const myDB = db.db('TechWebShop');
-  app.post('/create-user/', (req, res) => {
-    req.on('data', function (data) {
-      myDB.collection('users').findOne({email: JSON.parse(data).email}, (err, item) => {
-        if (item !== null || err) {
-          return res.status(302).send({
-            error: 'Email already exists'
-         });
-        } else {
-          data._id = new ObjectId()
-          myDB.collection('users').insertOne(JSON.parse(data), (err, item) => {
-            if (err) {
-              res.send({'error':'An error has occurred'});
-            } else {
-              res.send({'status':'user added'});
-            } 
-          })
-        }
-      })
+  app.post('/create-user', (req, res) => {
+    myDB.collection('users').findOne({email: res.body.email}, (err, item) => {
+      if (item !== null || err) {
+        return res.status(302).send({
+          error: 'Email already exists'
+        });
+      } else {
+        res.body._id = new ObjectId()
+        myDB.collection('users').insertOne(res.body, (err, item) => {
+          if (err) {
+            res.send({'error':'An error has occurred'});
+          } else {
+            res.send({'status':'user added'});
+          } 
+        })
+      }
     })
   })
   app.post('/login-user', (req, res) => {

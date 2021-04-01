@@ -3,16 +3,14 @@ const { ObjectId } = require('bson');
 module.exports = function(app, db) {
   var ObjectID = require('mongodb').ObjectID;
   const myDB = db.db('TechWebShop');
-  app.post('/create-order/', (req, res) => {
-    req.on('data', function (data) {
-      data._id = new ObjectId()
-      myDB.collection('orders').insertOne(JSON.parse(data), (err, item) => {
-        if (err) {
-          res.send({'error':'An error has occurred'});
-        } else {
-          res.send({'status':'Order added'});
-        } 
-      })
+  app.post('/create-order', (req, res) => {
+    res.body._id = new ObjectId()
+    myDB.collection('orders').insertOne(res.body, (err, item) => {
+      if (err) {
+        res.send({'error':'An error has occurred'});
+      } else {
+        res.send({'status':'Order added'});
+      } 
     })
   })
   app.post('/get-orders', (req, res) => {

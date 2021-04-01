@@ -17,7 +17,7 @@ module.exports = function(app, db) {
       } 
     });
   });
-  app.get('/productInfo/:id/', (req, res) => {
+  app.get('/productInfo/:id', (req, res) => {
     const details = { '_id':  new ObjectID(req.params.id) };
     myDB.collection('product').findOne(details, (err, item) => {
       if (err) {
@@ -48,7 +48,7 @@ module.exports = function(app, db) {
       } 
     })
   })
-  app.post('/create-comment/', (req, res) => {
+  app.post('/create-comment', (req, res) => {
     const details = { '_id': new ObjectID(req.body.id) };
     var id = req.body.reviewId
     myDB.collection('product').findOne(details, (err, item) => {
