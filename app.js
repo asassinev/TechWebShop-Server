@@ -3,7 +3,7 @@ const MongoClient    = require('mongodb').MongoClient;
 const app            = express();
 var cors = require ('cors');
 app.use(cors({
-  origin:['http://localhost:8080','http://127.0.0.1:8080', "https://asassinev.github.io", "https://tech-web-shop-server.herokuapp.com/"],
+  origin:['http://localhost:8080','http://127.0.0.1:8080', "https://asassinev.github.io", "https://apricot-shortcake-65218.herokuapp.com/"],
   credentials:true
 }));
 app.use(express.json());
