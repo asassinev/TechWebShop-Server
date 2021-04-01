@@ -4,14 +4,14 @@ module.exports = function(app, db) {
   var ObjectID = require('mongodb').ObjectID;
   const myDB = db.db('TechWebShop');
   app.post('/create-user', (req, res) => {
-    myDB.collection('users').findOne({email: res.body.email}, (err, item) => {
+    myDB.collection('users').findOne({email: req.body.email}, (err, item) => {
       if (item !== null || err) {
         return res.status(302).send({
           error: 'Email already exists'
         });
       } else {
-        res.body._id = new ObjectId()
-        myDB.collection('users').insertOne(res.body, (err, item) => {
+        req.body._id = new ObjectId()
+        myDB.collection('users').insertOne(req.body, (err, item) => {
           if (err) {
             res.send({'error':'An error has occurred'});
           } else {
