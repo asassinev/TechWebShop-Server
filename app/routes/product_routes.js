@@ -4,7 +4,6 @@ module.exports = function(app, db) {
   var ObjectID = require('mongodb').ObjectID;
   const myDB = db.db('TechWebShop');
   app.get('/productList/:categories', (req, res) => {
-    console.log(req.params.categories);
     myDB.collection('product').find({'categories': req.params.categories}).toArray((err, item) => {
       if (err) {
         res.send({'error':'An error has occurred'});
