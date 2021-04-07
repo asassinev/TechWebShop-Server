@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "devon": "nodemon app.js",
     "dev": "node app.js",
     "start": "npm run dev"
   },
