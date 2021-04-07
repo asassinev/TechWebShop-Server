@@ -15,7 +15,7 @@ module.exports = function(app, db) {
     })
   })
   app.post('/get-orders', (req, res) => {
-    myDB.collection('orders').find({email: req.body.email, phone: req.body.phone}, (err, item) => {
+    myDB.collection('orders').find({phone: req.body.phone}, (err, item) => {
       if (err) {
         res.send({'error':'An error has occurred'});
       } else {
